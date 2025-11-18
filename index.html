@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark"> <!-- Default to dark theme -->
+<html lang="en" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -275,7 +275,9 @@
 
             .print-page {
                 display: flex;
-                justify-content: space-between;
+                /* --- FIXED: Use flex-start and gap instead of space-between --- */
+                justify-content: flex-start;
+                gap: 2%; /* Add space between columns */
                 width: 100%;
                 height: 100vh;
                 break-after: always;
@@ -581,7 +583,7 @@
     <script>
         // --- Configuration ---
         const STORAGE_KEY = 'wood_cft_data'; 
-        const THEME_STORAGE_KEY = 'wood_cft_theme';
+        const THEME_STORAGE_KEY = 'wood_cft_theme'; // Key for theme
         const ROWS_PER_TABLE = 40; 
         
         // --- State ---
@@ -675,7 +677,7 @@
         function applyTheme(theme) {
             const htmlEl = document.documentElement;
             const bodyEl = document.body;
-            const allToggleBtns = document.querySelectorAll('.theme-toggle-btn');
+            const allToggleBtns = document.querySelectorAll('.theme-toggle-btn'); // Updated selector
 
             if (theme === 'light') {
                 htmlEl.setAttribute('data-theme', 'light');
