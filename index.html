@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark"> <!-- Default to dark theme -->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Size List</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+    
+    <style>
+        /* --- Theme Variables --- */
+        :root {
+            --bg-color: #f8f9fa;
+            --text-color: #212529;
+            --card-bg: #ffffff;
+            --card-header-bg: #f8f9fa;
+            --card-body-bg: #ffffff;
+            --card-border: rgba(0,0,0,0.175);
+            --table-header-bg: #212529;
+            --table-header-color: #ffffff;
+            --table-footer-bg: #f8f9fa;
+            --modal-bg: #ffffff;
+            --input-bg: #ffffff;
+            --input-color: #212529;
+            --input-border: #dee2e6;
+            --input-placeholder: #6c757d;
+            --btn-outline: #212529;
+            --text-primary-color: #0d6efd;
+            --scroll-btn-bg: rgba(0, 0, 0, 0.5);
+            --scroll-btn-hover: rgba(0, 0, 0, 0.7);
+
+            /* Bootstrap variable overrides */
+            --bs-body-color: var(--text-color);
+            --bs-body-bg: var(--bg-color);
+            --bs-table-bg: var(--card-bg);
+            --bs-table-striped-bg: rgba(0,0,0,0.05);
+            --bs-table-hover-bg: rgba(0,0,0,0.075);
+            --bs-secondary-bg: var(--card-body-bg);
+        }
+
+        [data-theme="dark"] {
+            --bg-color: #212529;
+            --text-color: #dee2e6;
+            --card-bg: #343a40;
+            --card-header-bg: #212529;
+            --card-body-bg: #343a40;
+            --card-border: rgba(255,255,255,0.125);
+            --table-header-bg: #212529;
+            --table-header-color: #f8f9fa;
+            --table-footer-bg: #343a40;
+            --modal-bg: #343a40;
+            /* EVEN DARKER input background */
+            --input-bg: #222528; 
+            --input-color: #f8f9fa;
+            --input-border: #6c757d;
+            --input-placeholder: #adb5bd;
+            --btn-outline: #f8f9fa;
+            --text-primary-color: #69a6fd;
+            --scroll-btn-bg: rgba(255, 255, 255, 0.3);
+            --scroll-btn-hover: rgba(255, 255, 255, 0.5);
+            
+            color-scheme: dark;
+
+            --bs-body-color: var(--text-color);
+            --bs-body-bg: var(--bg-color);
+            --bs-table-bg: var(--card-bg);
+            --bs-table-color: var(--text-color);
+            --bs-table-striped-bg: rgba(255,255,255,0.05);
+            --bs-table-hover-bg: rgba(255,255,255,0.075);
+            --bs-secondary-bg: var(--card-body-bg);
+
+            /* --- FIXES for dark text --- */
+            .table .text-primary,
+            .table-active .text-primary {
+                color: var(--text-primary-color) !important;
+            }
+            
+            .table-active, .table-active > th, .table-active > td {
+                color: var(--text-color) !important;
+            }
+            
+            /* Darker border for inputs in dark mode */
+            .form-control {
+                border-color: #40454a; /* Adjusted border to match darker input */
+            }
+        }
+        
+        /* --- Base Styles --- */
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+        .app-container {
+            max-width: 1100px;
+            margin: 20px auto;
+            background: var(--card-bg);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 1px solid var(--card-border);
+            transition: background-color 0.2s ease, border-color 0.2s ease;
+        }
+        
+        /* Card */
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            color: var(--text-color);
+        }
+        .card-header {
+            background-color: var(--card-header-bg);
+            border-bottom: 1px solid var(--card-border);
+        }
+        .card-body.bg-light {
+             background-color: var(--card-body-bg) !important;
+        }
+        
+        /* Form Inputs */
+        .form-control, .form-select {
+            background-color: var(--input-bg);
+            color: var(--input-color);
+            border: 1px solid var(--input-border);
+        }
+        .form-control::placeholder {
+            color: var(--input-placeholder);
+        }
+        .form-control:focus {
+            background-color: var(--input-bg);
+            color: var(--input-color);
+            border-color: #86b7fe; /* Bootstrap primary blue */
+            box-shadow: 0 0 0 0.25rem rgba(13,110,253,.25);
+        }
+        .form-control[readonly] {
+            background-color: var(--input-bg); 
+            color: var(--text-primary-color) !important;
+            border-color: var(--input-border); /* Use consistent input border for readonly */
+        }
+        
+        /* Table */
+        .table {
+            color: var(--bs-body-color);
+            border-color: var(--card-border);
+        }
+        .table-dark {
+            --bs-table-bg: var(--table-header-bg);
+            --bs-table-color: var(--table-header-color);
+        }
+        .table tfoot tr.table-active {
+            background-color: var(--table-footer-bg) !important;
+            border-top: 1px solid var(--card-border);
+        }
+        
+        /* Modal */
+        .modal-content {
+            background-color: var(--modal-bg);
+            color: var(--text-color);
+            border: 1px solid var(--card-border);
+        }
+        .modal-header {
+            border-bottom: 1px solid var(--card-border);
+        }
+        .modal-footer {
+            border-top: 1px solid var(--card-border);
+        }
+        [data-theme="dark"] .btn-close {
+            filter: invert(1) grayscale(100%) brightness(200%);
+        }
+
+        /* Buttons */
+        .btn-outline-dark {
+            color: var(--btn-outline);
+            border-color: var(--btn-outline);
+        }
+        .btn-outline-dark:hover {
+            background-color: var(--btn-outline);
+            color: var(--bg-color);
+        }
+
+        .print-container {
+            display: none; /* Hidden on screen */
+        }
+        
+        .lock-icon {
+            cursor: pointer;
+            user-select: none;
+        }
+        
+        /* Scroll Buttons */
+        .scroll-btn {
+            position: fixed;
+            bottom: 70px; 
+            right: 20px;
+            z-index: 1050;
+            display: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--scroll-btn-bg);
+            color: white;
+            border: none;
+            font-size: 20px;
+            line-height: 1;
+            transition: background-color 0.2s, opacity 0.3s;
+        }
+        .scroll-btn:hover {
+            background-color: var(--scroll-btn-hover);
+        }
+        #goToBottomBtn {
+            bottom: 20px; 
+        }
+        .scroll-btn.show {
+            display: block;
+        }
+
+
+        /* --- Print Styles --- */
+        @media print {
+            /* Reset all theme vars for printing */
+            :root, [data-theme="dark"] {
+                --bg-color: #ffffff;
+                --text-color: #000000;
+                --card-bg: #ffffff;
+                --card-header-bg: #ffffff;
+                --card-body-bg: #ffffff;
+                --card-border: #dee2e6;
+                --table-header-bg: #ffffff;
+                --table-header-color: #000000;
+                --table-footer-bg: #ffffff;
+                --modal-bg: #ffffff;
+                --input-bg: #ffffff;
+                --input-color: #000000;
+                --input-border: #dee2e6;
+                --input-placeholder: #6c757d;
+                --btn-outline: #000000;
+                --text-primary-color: #0d6efd;
+
+                --bs-body-color: #000;
+                --bs-body-bg: #fff;
+                --bs-table-bg: #fff;
+                --bs-table-striped-bg: #fff;
+                --bs-table-hover-bg: #fff;
+                --bs-secondary-bg: #fff;
+            }
+            
+            @page {
+                size: A4;
+                margin: 10mm;
+            }
+
+            body {
+                background: white;
+                font-family: 'Arial', sans-serif;
+                font-size: 11px;
+                color: #000 !important;
+            }
+
+            .no-print {
+                display: none !important;
+            }
+            
+            /* Hide scroll buttons on print */
+            .scroll-btn {
+                display: none !important;
+            }
+
+            .print-container {
+                display: block;
+            }
+
+            .print-page {
+                display: flex;
+                justify-content: space-between;
+                width: 100%;
+                height: 100vh;
+                break-after: always;
+                page-break-after: always;
+            }
+            
+            .print-page:last-child {
+                break-after: auto;
+                page-break-after: auto;
+            }
+
+            .print-column {
+                width: 32%;
+                display: flex;
+                flex-direction: column;
+                padding: 0 5px;
+            }
+
+            .cft-table {
+                width: 100%;
+                border-collapse: collapse;
+                table-layout: fixed;
+            }
+            
+            .cft-table th, .cft-table td {
+                padding: 3px;
+                text-align: center;
+                border: none;
+                vertical-align: top;
+                white-space: nowrap;
+                color: #000 !important;
+            }
+            
+            .cft-table td.col-cft-data {
+                font-weight: bold;
+            }
+
+            .cft-table th.col-nos, .cft-table td.col-nos { width: 12%; }
+            .cft-table th.col-l,   .cft-table td.col-l   { width: 22%; }
+            .cft-table th.col-w,   .cft-table td.col-w   { width: 22%; }
+            .cft-table th.col-t,   .cft-table td.col-t   { width: 22%; }
+            .cft-table th.col-cft, .cft-table td.col-cft { width: 22%; }
+
+            .cft-table thead th {
+                font-weight: bold;
+                border: none;
+                padding-bottom: 5px;
+            }
+
+            .cft-table tr.total-row td {
+                font-weight: bold;
+                padding-top: 5px;
+            }
+            
+            .cft-table tr.final-total-row td {
+                border-top: 1px solid #000;
+				font-size: 12px;
+            }
+        }
+    </style>
+</head>
+<body data-bs-theme="dark"> <!-- Apply theme to body as well -->
+    <!-- === SCREEN INTERFACE === -->
+    <div class="container app-container no-print">
+        
+        <!-- Responsive Header (Grid System) -->
+        <div class="row gy-2 align-items-center mb-4 justify-content-between">
+            
+            <!-- Left: Title & Mobile Theme Toggle -->
+            <div class="col-12 col-lg-auto d-flex justify-content-between align-items-center">
+                <h2 class="fw-bold mb-0 text-nowrap"><i class="bi bi-list-ol me-2"></i>Size List</h2>
+                <!-- Mobile Theme Toggle Button -->
+                <button class="btn btn-outline-dark d-lg-none theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                    <i class="bi bi-moon-fill"></i>
+                </button>
+            </div>
+
+            <!-- Right: Action Buttons -->
+            <div class="col-12 col-lg-auto">
+                <div class="row g-2 align-items-center">
+                    <!-- Desktop Theme Toggle -->
+                    <div class="col-auto d-none d-lg-block">
+                        <button class="btn btn-outline-dark h-100 theme-toggle-btn" onclick="toggleTheme()" title="Toggle Theme">
+                            <i class="bi bi-moon-fill"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Buttons -->
+                    <div class="col-6 col-lg-auto">
+                        <button class="btn btn-outline-dark w-100" onclick="backupData()">
+                            <i class="bi bi-download me-1"></i> Backup
+                        </button>
+                    </div>
+                    <div class="col-6 col-lg-auto">
+                         <!-- Hidden file input -->
+                        <input type="file" id="restoreFileTrigger" style="display:none;" accept=".txt" onchange="restoreData(event)">
+                        <button class="btn btn-outline-dark w-100" onclick="document.getElementById('restoreFileTrigger').click()">
+                            <i class="bi bi-upload me-1"></i> Restore
+                        </button>
+                    </div>
+                    <div class="col-6 col-lg-auto">
+                        <button class="btn btn-danger w-100" onclick="clearAllData()">
+                            <i class="bi bi-trash me-1"></i> Clear
+                        </button>
+                    </div>
+                    <div class="col-6 col-lg-auto">
+                        <button class="btn btn-dark w-100" onclick="printData()">
+                            <i class="bi bi-printer me-1"></i> Print
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Input Form -->
+        <div class="card mb-4">
+            <div class="card-header bg-dark text-white d-flex flex-wrap justify-content-between align-items-center gap-2">
+                <span id="formHeader">Add Entry</span>
+                <span id="totalCft" class="text-nowrap">Total CFT : </span>
+            </div>
+            <div class="card-body bg-light rounded">
+                <form id="cftForm" class="row g-2 align-items-end" onsubmit="handleFormSubmit(event)">
+                    
+                    <div class="col-md-2 col-6">
+                        <label class="form-label fw-bold">Nos
+                            <span class="ms-1 lock-icon" id="lock-nos" onclick="toggleLock('nos')">🔓</span>
+                        </label>
+                        <input type="number" class="form-control" id="nos" required placeholder="Qty" oninput="calculatePreview('main')">
+                    </div>
+                    
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Length (ft)</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" id="length" required placeholder="e.g. 10" oninput="calculatePreview('main')">
+                            <span class="input-group-text bg-transparent border-0 p-1">
+                                <span class="lock-icon" id="lock-length" onclick="toggleLock('length')">🔓</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Width (in)</label>
+                        <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" id="width" required placeholder="e.g. 12" oninput="calculatePreview('main')">
+                            <span class="input-group-text bg-transparent border-0 p-1">
+                                <span class="lock-icon" id="lock-width" onclick="toggleLock('width')">🔓</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-2 col-6">
+                        <label class="form-label">Height (in)</label>
+                         <div class="input-group">
+                            <input type="number" step="0.01" class="form-control" id="thick" required placeholder="e.g. 6" oninput="calculatePreview('main')">
+                            <span class="input-group-text bg-transparent border-0 p-1">
+                                <span class="lock-icon" id="lock-thick" onclick="toggleLock('thick')">🔓</span>
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- Live Preview Field -->
+                    <div class="col-md-2 col-6">
+                        <label class="form-label text-muted small">CFT</label>
+                        <input type="text" class="form-control fw-bold" id="previewCft" readonly value="0.00">
+                    </div>
+
+                    <div class="col-md-2 col-6">
+                        <label class="form-label d-none d-md-block">&nbsp;</label> <!-- Spacer -->
+                        <button type="submit" id="submitBtn" class="btn btn-success w-100 fw-bold">
+                            <i class="bi bi-plus-circle"></i> Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Screen Data Table -->
+        <div class="table-responsive">
+            <table class="table table-striped table-hover text-center align-middle">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nos</th>
+                        <th>Length</th>
+                        <th>Width</th>
+                        <th>Height</th>
+                        <th>CFT</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody id="screenTableBody">
+                    <!-- JS will populate this -->
+                </tbody>
+                <tfoot>
+                    <tr class="table-active fw-bold">
+                        <td colspan="4" class="text-end">Total CFT:</td>
+                        <td id="screenTotal" class="text-primary fs-5">0.00</td>
+                        <td></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    
+    <!-- === EDIT MODAL === -->
+    <div class="modal fade" id="editEntryModal" tabindex="-1" aria-labelledby="editEntryModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="editEntryModalLabel"><i class="bi bi-pencil-square me-2"></i>Edit Entry</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editForm" onkeydown="handleModalKeydown(event, 'edit')">
+                        <input type="hidden" id="editEntryId">
+                        
+                        <div class="row g-3">
+                            <div class="col-6">
+                                <label class="form-label fw-bold">Nos</label>
+                                <input type="number" class="form-control" id="editNos" required oninput="calculatePreview('modal')">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Length (ft)</label>
+                                <input type="number" step="0.01" class="form-control" id="editLength" required oninput="calculatePreview('modal')">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Width (in)</label>
+                                <input type="number" step="0.01" class="form-control" id="editWidth" required oninput="calculatePreview('modal')">
+                            </div>
+                            <div class="col-6">
+                                <label class="form-label">Thick (in)</label>
+                                <input type="number" step="0.01" class="form-control" id="editThick" required oninput="calculatePreview('modal')">
+                            </div>
+                            <div class="col-12">
+                                <label class="form-label text-muted small">CFT</label>
+                                <input type="text" class="form-control fw-bold" id="editPreviewCft" readonly value="0.00">
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"><i class="bi bi-x-circle me-1"></i>Close</button>
+                    <button type="button" class="btn btn-primary" id="editModalSaveBtn" onclick="handleModalUpdate()"><i class="bi bi-save me-1"></i>Save Changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === ALERT MODAL === -->
+    <div class="modal fade" id="alertModal" tabindex="-1" aria-labelledby="alertModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" onkeydown="handleModalKeydown(event, 'alert')">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="alertModalTitle"><i class="bi bi-info-circle me-2"></i>Alert</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="alertModalBody">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="alertModalOkBtn" data-bs-dismiss="modal"><i class="bi bi-check-circle me-1"></i>OK</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === CONFIRM MODAL === -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content" onkeydown="handleModalKeydown(event, 'confirm')">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalTitle"><i class="bi bi-exclamation-triangle me-2"></i>Confirm</h5>
+                    <button type="button" class="btn-close" id="confirmModalCloseBtn" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body" id="confirmModalBody">
+                    ...
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="confirmModalCancelBtn" data-bs-dismiss="modal"><i class="bi bi-x-circle me-1"></i>Cancel</button>
+                    <button type="button" class="btn btn-primary" id="confirmModalBtn"><i class="bi bi-check-circle me-1"></i>Confirm</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- === PRINT INTERFACE (Hidden on screen) === -->
+    <div id="printArea" class="print-container">
+        <!-- JS will inject the print layout here -->
+    </div>
+    
+    <!-- === SCROLL BUTTONS === -->
+    <button class="btn scroll-btn" id="goToTopBtn" onclick="goToTop()" title="Go to top">
+        <i class="bi bi-arrow-up-short"></i>
+    </button>
+    <button class="btn scroll-btn" id="goToBottomBtn" onclick="goToBottom()" title="Go to bottom">
+        <i class="bi bi-arrow-down-short"></i>
+    </button>
+
+
+    <!-- === JAVASCRIPT === -->
+    <!-- Bootstrap Bundle JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // --- Configuration ---
+        const STORAGE_KEY = 'wood_cft_data'; 
+        const THEME_STORAGE_KEY = 'wood_cft_theme';
+        const ROWS_PER_TABLE = 40; 
+        
+        // --- State ---
+        let entries = [];
+        let editModalInstance = null;
+        let alertModalInstance = null; // For alerts
+        let confirmModalInstance = null; // For confirms
+        let fieldLocks = {
+            nos: false,
+            length: false,
+            width: false,
+            thick: false
+        };
+        let topBtn = document.getElementById("goToTopBtn");
+        let bottomBtn = document.getElementById("goToBottomBtn");
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', function() {
+            // Init Edit Modal
+            const editModalEl = document.getElementById('editEntryModal');
+            if (editModalEl) {
+                editModalInstance = new bootstrap.Modal(editModalEl);
+                editModalEl.addEventListener('shown.bs.modal', function () {
+                    document.getElementById('editNos').focus();
+                });
+            }
+            
+            // Init Alert Modal
+            const alertModalEl = document.getElementById('alertModal');
+            if (alertModalEl) {
+                alertModalInstance = new bootstrap.Modal(alertModalEl);
+                alertModalEl.addEventListener('shown.bs.modal', function () {
+                    document.getElementById('alertModalOkBtn').focus();
+                });
+            }
+
+            // Init Confirm Modal
+            const confirmModalEl = document.getElementById('confirmModal');
+            if (confirmModalEl) {
+                confirmModalInstance = new bootstrap.Modal(confirmModalEl);
+                confirmModalEl.addEventListener('shown.bs.modal', function () {
+                    document.getElementById('confirmModalBtn').focus();
+                });
+            }
+
+            applyTheme(getTheme());
+            loadData();
+            document.getElementById('nos').focus();
+        });
+        
+        // --- Scroll Button Logic ---
+        window.onscroll = function() {
+            scrollFunction();
+        };
+
+        function scrollFunction() {
+            const scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+            const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            
+            if (scrollTop > 20) {
+                topBtn.classList.add("show");
+            } else {
+                topBtn.classList.remove("show");
+            }
+            
+            if (scrollTop < scrollHeight - 20) {
+                bottomBtn.classList.add("show");
+            } else {
+                bottomBtn.classList.remove("show");
+            }
+        }
+
+        function goToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        function goToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+        }
+
+
+        // --- Theme Logic ---
+        function getTheme() {
+            return localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
+        }
+
+        function saveTheme(theme) {
+            localStorage.setItem(THEME_STORAGE_KEY, theme);
+        }
+
+        function applyTheme(theme) {
+            const htmlEl = document.documentElement;
+            const bodyEl = document.body;
+            const allToggleBtns = document.querySelectorAll('.theme-toggle-btn');
+
+            if (theme === 'light') {
+                htmlEl.setAttribute('data-theme', 'light');
+                bodyEl.setAttribute('data-bs-theme', 'light');
+                allToggleBtns.forEach(btn => {
+                    const i = btn.querySelector('i');
+                    if(i) {
+                        i.classList.remove('bi-moon-fill');
+                        i.classList.add('bi-sun-fill');
+                    }
+                });
+            } else {
+                htmlEl.setAttribute('data-theme', 'dark');
+                bodyEl.setAttribute('data-bs-theme', 'dark');
+                allToggleBtns.forEach(btn => {
+                    const i = btn.querySelector('i');
+                    if(i) {
+                        i.classList.remove('bi-sun-fill');
+                        i.classList.add('bi-moon-fill');
+                    }
+                });
+            }
+        }
+
+        function toggleTheme() {
+            const currentTheme = getTheme();
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            saveTheme(newTheme);
+            applyTheme(newTheme);
+        }
+
+        // --- Custom Modals ---
+        function showAlert(title, message) {
+            document.getElementById('alertModalTitle').innerHTML = `<i class="bi bi-info-circle me-2"></i> ${title}`;
+            document.getElementById('alertModalBody').innerText = message;
+            if (alertModalInstance) {
+                alertModalInstance.show();
+            }
+        }
+
+        function showConfirm(title, message, onConfirmCallback, confirmBtnClass = 'btn-primary', confirmBtnIcon = 'bi-check-circle', onCancelCallback = null) {
+            document.getElementById('confirmModalTitle').innerHTML = `<i class="bi bi-exclamation-triangle me-2"></i> ${title}`;
+            document.getElementById('confirmModalBody').innerText = message;
+            
+            const confirmBtn = document.getElementById('confirmModalBtn');
+            confirmBtn.className = `btn ${confirmBtnClass}`; // Apply danger/warning class
+            confirmBtn.innerHTML = `<i class="bi ${confirmBtnIcon} me-1"></i> Confirm`; // Set icon
+            
+            // Set the confirm callback
+            confirmBtn.onclick = () => {
+                onConfirmCallback();
+                if (confirmModalInstance) confirmModalInstance.hide();
+            };
+
+            // Set the cancel callback for both Cancel and Close buttons
+            const cancelBtn = document.getElementById('confirmModalCancelBtn');
+            const closeBtn = document.getElementById('confirmModalCloseBtn');
+            
+            const cancelAction = () => {
+                if (onCancelCallback) onCancelCallback();
+                // No need to hide, data-bs-dismiss does it
+            };
+            
+            cancelBtn.onclick = cancelAction;
+            closeBtn.onclick = cancelAction;
+
+            if (confirmModalInstance) {
+                confirmModalInstance.show();
+            }
+        }
+        
+        // --- Modal Keydown Handler ---
+        function handleModalKeydown(event, modalType) {
+             if (event.key === 'Enter') {
+                event.preventDefault();
+                switch (modalType) {
+                    case 'edit':
+                        document.getElementById('editModalSaveBtn').click();
+                        break;
+                    case 'alert':
+                        document.getElementById('alertModalOkBtn').click();
+                        break;
+                    case 'confirm':
+                        document.getElementById('confirmModalBtn').click();
+                        break;
+                }
+            }
+        }
+
+        // --- Core Logic ---
+        function loadData() {
+            const stored = localStorage.getItem(STORAGE_KEY);
+            if (stored) {
+                entries = JSON.parse(stored);
+            }
+            renderScreenTable();
+        }
+
+        function saveData() {
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(entries));
+        }
+        
+        function calculateCft(nos, l, w, t) {
+            const cft = (nos * l * w * t) / 144;
+            return parseFloat(cft.toFixed(2));
+        }
+
+        function calculatePreview(type) {
+            let nos, l, w, t, targetId;
+            
+            if (type === 'main') {
+                nos = parseFloat(document.getElementById('nos').value) || 0;
+                l = parseFloat(document.getElementById('length').value) || 0;
+                w = parseFloat(document.getElementById('width').value) || 0;
+                t = parseFloat(document.getElementById('thick').value) || 0;
+                targetId = 'previewCft';
+            } else {
+                nos = parseFloat(document.getElementById('editNos').value) || 0;
+                l = parseFloat(document.getElementById('editLength').value) || 0;
+                w = parseFloat(document.getElementById('editWidth').value) || 0;
+                t = parseFloat(document.getElementById('editThick').value) || 0;
+                targetId = 'editPreviewCft';
+            }
+
+            const cft = calculateCft(nos, l, w, t);
+            document.getElementById(targetId).value = cft.toFixed(2);
+        }
+
+        function handleFormSubmit(event) {
+            event.preventDefault();
+            
+            const nos = parseFloat(document.getElementById('nos').value) || 1;
+            const l = parseFloat(document.getElementById('length').value);
+            const w = parseFloat(document.getElementById('width').value);
+            const t = parseFloat(document.getElementById('thick').value);
+
+            if (isNaN(l) || isNaN(w) || isNaN(t) || l <= 0 || w <= 0 || t <= 0) {
+                showAlert("Invalid Input", "Please enter valid dimensions (Length, Width, Height).");
+                return;
+            }
+            
+            const existingEntry = entries.find(e => e.l === l && e.w === w && e.t === t);
+
+            if (existingEntry) {
+                existingEntry.nos += nos;
+                existingEntry.cft = calculateCft(existingEntry.nos, existingEntry.l, existingEntry.w, existingEntry.t);
+            } else {
+                const cft = calculateCft(nos, l, w, t);
+                const maxId = entries.reduce((max, e) => e.id > max ? e.id : max, 0);
+
+                const entry = {
+                    id: maxId + 1,
+                    nos: nos,
+                    l: l,
+                    w: w,
+                    t: t,
+                    cft: cft
+                };
+                entries.push(entry);
+            }
+            
+            saveData();
+            renderScreenTable();
+            resetForm();
+        }
+
+        function resetForm() {
+            if (!fieldLocks.nos) document.getElementById('nos').value = '';
+            if (!fieldLocks.length) document.getElementById('length').value = '';
+            if (!fieldLocks.width) document.getElementById('width').value = '';
+            if (!fieldLocks.thick) document.getElementById('thick').value = '';
+            
+            calculatePreview('main');
+            document.getElementById('nos').focus();
+        }
+
+        function editEntry(id) {
+            const entry = entries.find(e => e.id === id);
+            if (!entry) return;
+
+            document.getElementById('editEntryId').value = entry.id;
+            document.getElementById('editNos').value = entry.nos || 1;
+            document.getElementById('editLength').value = entry.l;
+            document.getElementById('editWidth').value = entry.w;
+            document.getElementById('editThick').value = entry.t;
+            calculatePreview('modal');
+
+            if (editModalInstance) {
+                editModalInstance.show();
+            }
+        }
+        
+        function handleModalUpdate() {
+            const id = parseFloat(document.getElementById('editEntryId').value);
+            const nos = parseFloat(document.getElementById('editNos').value) || 1;
+            const l = parseFloat(document.getElementById('editLength').value);
+            const w = parseFloat(document.getElementById('editWidth').value);
+            const t = parseFloat(document.getElementById('editThick').value);
+
+            if (isNaN(l) || isNaN(w) || isNaN(t) || l <= 0 || w <= 0 || t <= 0) {
+                showAlert("Invalid Input", "Please enter valid dimensions (Length, Width, Height).");
+                return;
+            }
+
+            const cft = calculateCft(nos, l, w, t);
+            
+            const entry = entries.find(e => e.id === id);
+            if (!entry) return;
+
+            entry.nos = nos;
+            entry.l = l;
+            entry.w = w;
+            entry.t = t;
+            entry.cft = cft; 
+
+            saveData();
+            
+            updateScreenRow(entry);
+            updateScreenTotal();
+
+            if (editModalInstance) {
+                editModalInstance.hide();
+            }
+        }
+
+        function deleteEntry(id) {
+            showConfirm(
+                "Delete Entry", 
+                "Are you sure you want to delete this entry?", 
+                () => {
+                    entries = entries.filter(e => e.id !== id);
+                    saveData();
+                    renderScreenTable();
+                }, 
+                'btn-danger', // Use red button
+                'bi-trash' // Trash icon
+            );
+        }
+
+        function clearAllData() {
+            showConfirm(
+                "Clear All Data", 
+                "Are you sure you want to delete ALL data? This action cannot be undone.", 
+                () => {
+                    entries = [];
+                    saveData();
+                    renderScreenTable();
+                }, 
+                'btn-danger', // Use red button
+                'bi-trash' // Trash icon
+            );
+        }
+        
+        function toggleLock(field) {
+            fieldLocks[field] = !fieldLocks[field];
+            const icon = document.getElementById(`lock-${field}`);
+            icon.textContent = fieldLocks[field] ? '🔒' : '🔓';
+            icon.title = fieldLocks[field] ? 'Unlock field' : 'Lock field';
+        }
+        
+        // --- Backup / Restore ---
+
+        function backupData() {
+            if (entries.length === 0) {
+                showAlert("Backup", "No data to backup.");
+                return;
+            }
+            const data = JSON.stringify(entries);
+            const blob = new Blob([data], {type: 'text/plain'});
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'size_list_backup.txt';
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function restoreData(event) {
+            const fileInput = event.target;
+            const file = fileInput.files[0];
+            if (!file) return;
+            
+            const onConfirmRestore = () => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (Array.isArray(data) && (data.length === 0 || (data.length > 0 && data[0].hasOwnProperty('l') && data[0].hasOwnProperty('cft')))) {
+                            entries = data;
+                            saveData();
+                            renderScreenTable();
+                            showAlert("Restore Complete", data.length > 0 ? "Data restored successfully!" : "Restored backup file was empty.");
+                        } else {
+                            showAlert("Restore Failed", "Invalid backup file format.");
+                        }
+                    } catch (error) {
+                        showAlert("Restore Error", "Error reading backup file. Is it a valid .txt backup?");
+                        console.error("Restore error:", error);
+                    } finally {
+                        fileInput.value = null; // Clear input
+                    }
+                };
+                reader.readAsText(file);
+            };
+
+            const onCancelRestore = () => {
+                fileInput.value = null; // Clear input if they cancel
+            };
+
+            showConfirm(
+                "Restore Backup", 
+                "Restoring data will overwrite all current entries. Are you sure?", 
+                onConfirmRestore, 
+                'btn-warning', // Use warning button
+                'bi-upload', // Upload icon
+                onCancelRestore
+            );
+        }
+
+        // --- Screen Rendering ---
+
+        function renderScreenTable() {
+            const tbody = document.getElementById('screenTableBody');
+            let tableHTML = '';
+            
+            entries.forEach((e) => {
+                tableHTML += buildRowHTML(e);
+            });
+            
+            tbody.innerHTML = tableHTML;
+            updateScreenTotal();
+        }
+        
+        function buildRowHTML(e) {
+            const displayNos = e.nos || 1;
+            return `
+                <tr data-id="${e.id}">
+                    <td><strong>${displayNos}</strong></td>
+                    <td>${e.l}</td>
+                    <td>${e.w}</td>
+                    <td>${e.t}</td>
+                    <td class="fw-bold text-primary">${e.cft.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="editEntry(${e.id})" title="Edit">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteEntry(${e.id})" title="Delete">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                </tr>
+            `;
+        }
+        
+        function updateScreenRow(entry) {
+            const row = document.querySelector(`tr[data-id="${entry.id}"]`);
+            if (row) {
+                const displayNos = entry.nos || 1;
+                row.innerHTML = `
+                    <td><strong>${displayNos}</strong></td>
+                    <td>${entry.l}</td>
+                    <td>${entry.w}</td>
+                    <td>${entry.t}</td>
+                    <td class="fw-bold text-primary">${entry.cft.toFixed(2)}</td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary me-1" onclick="editEntry(${entry.id})" title="Edit">
+                            <i class="bi bi-pencil-fill"></i>
+                        </button>
+                        <button class="btn btn-sm btn-outline-danger" onclick="deleteEntry(${entry.id})" title="Delete">
+                            <i class="bi bi-trash-fill"></i>
+                        </button>
+                    </td>
+                `;
+            }
+        }
+
+        function updateScreenTotal() {
+            const total = entries.reduce((acc, e) => acc + e.cft, 0);
+            document.getElementById('screenTotal').innerText = total.toFixed(2);
+            document.getElementById('totalCft').innerText = "Total CFT : " + total.toFixed(2);
+        }
+
+
+        // --- Print Rendering ---
+
+        function printData() {
+            if (entries.length === 0) {
+                showAlert("Print", "No data to print!");
+                return;
+            }
+
+            const printArea = document.getElementById('printArea');
+            printArea.innerHTML = ''; 
+
+            let currentGlobalIndex = 0;
+            let runningTotal = 0;
+            let tableCount = 0;
+            let pageDiv = null;
+
+            while (currentGlobalIndex < entries.length) {
+                
+                if (tableCount % 3 === 0) {
+                    if (pageDiv) printArea.appendChild(pageDiv);
+                    pageDiv = document.createElement('div');
+                    pageDiv.className = 'print-page';
+                }
+
+                const isFirstTable = (tableCount === 0);
+                const headerRows = 1;
+                const footerRows = isFirstTable ? 1 : 2; 
+                const availableDataRows = ROWS_PER_TABLE - headerRows - footerRows;
+
+                const tableEntries = entries.slice(currentGlobalIndex, currentGlobalIndex + availableDataRows);
+                
+                let tableHTML = `<div class="print-column">`;
+                
+                tableHTML += `<table class="cft-table">
+                    <thead>
+                        <tr>
+                            <th class="col-nos">Nos</th>
+                            <th class="col-l">Length</th>
+                            <th class="col-w">Width</th>
+                            <th class="col-t">Height</th>
+                            <th class="col-cft">Cft</th>
+                        </tr>
+                    </thead>
+                    <tbody>`;
+
+                let tableSubTotal = 0;
+
+                if (!isFirstTable) {
+                    tableHTML += `
+                        <tr class="total-row">
+                            <td colspan="4" style="text-align:right"></td>
+                            <td class="col-cft-data">${runningTotal.toFixed(2)}</td>
+                        </tr>
+                    `;
+                }
+
+                tableEntries.forEach((entry) => {
+                    const displayNos = entry.nos || 1;
+                    tableSubTotal += entry.cft;
+
+                    tableHTML += `
+                        <tr>
+                            <td><strong>${displayNos}</strong></td>
+                            <td>${entry.l}</td>
+                            <td>${entry.w}</td>
+                            <td>${entry.t}</td>
+                            <td class="col-cft-data">${entry.cft.toFixed(2)}</td>
+                        </tr>
+                    `;
+                });
+                
+                runningTotal += tableSubTotal;
+
+                const isLastEntry = (currentGlobalIndex + tableEntries.length >= entries.length);
+                const label = isLastEntry ? "GRAND TOTAL" : "Total";
+                
+                const totalRowClass = "total-row final-total-row";
+                
+                tableHTML += `
+                        <tr class="${totalRowClass}">
+                            <td colspan="4" style="text-align:right">${label} :</td>
+                            <td class="col-cft-data">${runningTotal.toFixed(2)}</td>
+                        </tr>
+                    </tbody>
+                </table>`;
+
+                tableHTML += `</div>`;
+
+                pageDiv.innerHTML += tableHTML;
+
+                currentGlobalIndex += tableEntries.length;
+                tableCount++;
+            }
+
+            if (pageDiv) {
+                printArea.appendChild(pageDiv);
+            }
+
+            window.print();
+        }
+    </script>
+</body>
+</html>
